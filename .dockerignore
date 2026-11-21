@@ -1,0 +1,13 @@
+.git
+.github
+.dvc
+.dvcignore
+.venv
+.idea
+data
+model
+mlruns
+*.ipynb
+*.pdf
+sample.json
+__pycache__
