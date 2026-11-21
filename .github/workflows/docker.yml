@@ -1,0 +1,27 @@
+name: Build Docker image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image (fetches latest model from DagsHub via MLflow)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: dvc-project-hb-api:latest
+          build-args: |
+            MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }}
+          secrets: |
+            dagshub_token=${{ secrets.DAGSHUB_TOKEN }}
